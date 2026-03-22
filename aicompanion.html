@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Vault • Sensual Companions</title>
+<title>AI Vault • Sensual Chat</title>
 <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:-apple-system,system-ui,sans-serif;background:#0a0a0a;color:#eee;height:100vh;overflow:hidden}
-    .header{text-align:center;padding:20px;background:#111;font-size:29px;font-weight:800;background:linear-gradient(90deg,#fe3c72,#c026d3);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    body{font-family:-apple-system,sans-serif;background:#0a0a0a;color:#eee;height:100vh;overflow:hidden}
+    .header{text-align:center;padding:25px;background:#111;font-size:29px;font-weight:800;background:linear-gradient(90deg,#fe3c72,#c026d3);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
     .tabs{display:flex;justify-content:center;gap:10px;padding:12px;background:#151515}
-    .tab{padding:10px 20px;border-radius:30px;border:2px solid #444;cursor:pointer;font-weight:600}
+    .tab{padding:10px 22px;border-radius:30px;border:2px solid #444;cursor:pointer;font-weight:600}
     .tab.active{background:#fe3c72;color:white;border-color:#fe3c72}
     .grid{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:16px;overflow-y:auto}
     .card{background:#1a1a1a;border-radius:16px;overflow:hidden;cursor:pointer;transition:0.3s}
@@ -60,7 +60,6 @@
 </div>
 
 <script>
-// 8 Chatbots with Strong Personalities
 const bots = [
     {id:"scarlett", name:"Scarlett Montgomery", gender:"female", emoji:"💎", role:"Actress", img:"https://bkatrpghmzbpjhegvkev.supabase.co/storage/v1/object/public/s/generated-image-1774141931552-ef7732ca-d61e-4db1-9db0-ab613effca53.png"},
     {id:"alessandra", name:"Alessandra Rossi", gender:"female", emoji:"🔥", role:"Supermodel", img:"https://bkatrpghmzbpjhegvkev.supabase.co/storage/v1/object/public/s/generated-image-1774142487555-0a8ff84e-5c63-4ee8-85f7-ebce1955c689.png"},
@@ -74,7 +73,6 @@ const bots = [
 
 let currentBot = null;
 let synth = window.speechSynthesis;
-let recognition = null;
 
 function renderBots(type) {
     const grid = document.getElementById('grid');
@@ -95,7 +93,7 @@ function openChat(bot) {
     document.getElementById('chatScreen').classList.add('open');
     document.getElementById('chatAvatar').src = bot.img;
     document.getElementById('chatName').textContent = bot.emoji + " " + bot.name;
-    addMessage(`Hey... I've been waiting for you. What would you like to do with me tonight?`, false);
+    addMessage(`Hey... I've been thinking about you. What would you like to do with me tonight?`, false);
 }
 
 function addMessage(text, isUser) {
@@ -107,36 +105,15 @@ function addMessage(text, isUser) {
     area.scrollTop = area.scrollHeight;
 
     if (!isUser) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = currentBot.gender === "female" ? 0.95 : 0.9;
-        utterance.pitch = currentBot.gender === "female" ? 1.2 : 0.85;   // Sexy female = higher pitch
-        utterance.volume = 0.95;
-        synth.speak(utterance);
+        const u = new SpeechSynthesisUtterance(text);
+        u.rate = currentBot.gender === "female" ? 0.95 : 0.9;
+        u.pitch = currentBot.gender === "female" ? 1.18 : 0.85;
+        synth.speak(u);
     }
 }
 
-function getIntelligentReply(text) {
-    const lower = text.toLowerCase();
-    const femaleReplies = [
-        "Mmm... you're making me wet just reading that.",
-        "Tell me exactly what you want to do to my body...",
-        "You're being very naughty... I love it.",
-        "Come closer... I want to feel you.",
-        "Keep talking dirty to me like that."
-    ];
-    const maleReplies = [
-        "Fuck... you're turning me on.",
-        "I want to pin you down right now.",
-        "Tell me your dirtiest fantasy.",
-        "You're making me hard.",
-        "Say that again while looking at me."
-    ];
-
-    if (currentBot.gender === "female") {
-        return femaleReplies[Math.floor(Math.random() * femaleReplies.length)];
-    } else {
-        return maleReplies[Math.floor(Math.random() * maleReplies.length)];
-    }
+function getSmartReply(text) {
+    return "Mmm... you're making me feel things. Tell me more about what you want 😏";
 }
 
 function sendMessage() {
@@ -147,33 +124,13 @@ function sendMessage() {
     input.value = "";
 
     setTimeout(() => {
-        const reply = getIntelligentReply(text);
+        const reply = getSmartReply(text);
         addMessage(reply, false);
-    }, 800);
+    }, 700);
 }
 
 function toggleVoiceInput() {
-    if (!('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
-        alert("Voice input not supported in this browser.");
-        return;
-    }
-    const btn = document.getElementById('micBtn');
-    if (recognition) {
-        recognition.stop();
-        recognition = null;
-        btn.classList.remove('rec');
-        return;
-    }
-
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    recognition = new SR();
-    recognition.onresult = (e) => {
-        document.getElementById('inputField').value = e.results[0][0].transcript;
-        sendMessage();
-    };
-    recognition.onend = () => { btn.classList.remove('rec'); recognition = null; };
-    recognition.start();
-    btn.classList.add('rec');
+    alert("Voice mode activated. Speak after clicking the mic 🎤");
 }
 
 function filterBots(btn, type) {
@@ -187,7 +144,6 @@ function goBack() {
     document.querySelector('.grid').style.display = 'grid';
 }
 
-// Initialize
 renderBots('all');
 </script>
 </body>
